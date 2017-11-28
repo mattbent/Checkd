@@ -9,11 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class CBActivity extends AppCompatActivity {
+public class TransactionActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     public void changeActivity(String choice) {
-
         if(choice.equals("a")) {
             Intent intent = new Intent(this, CBActivity.class);
             startActivity(intent);
@@ -21,7 +20,6 @@ public class CBActivity extends AppCompatActivity {
         else if(choice.equals("b")){
             Intent intent = new Intent(this, TransactionActivity.class);
             startActivity(intent);
-
         }
     }
 
@@ -53,7 +51,7 @@ public class CBActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_balance);
+        setContentView(R.layout.activity_transactions);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
