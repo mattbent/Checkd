@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText passwordN =findViewById(R.id.input_password);
                 String accountName = accountN.getText().toString();
                 String passwordName = passwordN.getText().toString();
-                login();
+                //login();
                if(account.equals(accountName)&&password.equals(passwordName))
                 {
                     login();

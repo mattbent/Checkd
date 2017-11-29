@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import android.content.res.AssetManager;
@@ -157,9 +159,20 @@ public class TransactionActivity extends AppCompatActivity {
         double moneyNum = Double.parseDouble(money);
         return moneyNum;
     }
+// Write the file
+    private void writeToFile(String data, Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
 
@@ -167,11 +180,43 @@ public class TransactionActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        double savingAccountMon = typesOfAccount("Saving1.txt");
-        double checkingAccountMon = typesOfAccount("Checking1.txt");
+        writeToFile("Hello World",this);
 
         Button btn = (Button) findViewById(R.id.btm_comfirm);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double savingAccountMon = typesOfAccount("Saving1.txt");
+                double checkingAccountMon = typesOfAccount("Checking1.txt");
 
+                Spinner fromSpinner=(Spinner) findViewById(R.id.transaction_spinnerFrom);
+                String fromText = fromSpinner.getSelectedItem().toString();
+                Spinner toSpinner=(Spinner) findViewById(R.id.transaction_spinnerTo);
+                String toText = toSpinner.getSelectedItem().toString();
+
+                EditText amount = findViewById(R.id.editAmount);
+                String amountS = amount.getText().toString();
+                double amountMon = Double.parseDouble(amountS);
+
+
+                if(fromText.equals("Checking Account")&&toText.equals("Saving Account"))
+                {
+                    savingAccountMon = savingAccountMon + amountMon;
+                    checkingAccountMon = checkingAccountMon - amountMon;
+                    ArrayList savingAccountList = readFileArrayList("Saving1.txt");
+                    savingAccountList.set(0,"$"+savingAccountMon);
+                    ArrayList checkingAccountList = readFileArrayList("Checking1.txt");
+                    savingAccountList.set(0,"$"+checkingAccountMon);
+                }
+                else if(fromText.equals("Saving Account")&&toText.equals("Checking Account"))
+                {
+                    savingAccountMon = savingAccountMon - amountMon;
+                    checkingAccountMon = checkingAccountMon + amountMon;
+                }
+
+
+            }
+        });
     }
 
 }
