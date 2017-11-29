@@ -7,7 +7,7 @@
     <string name="password_input">Password</string>
     <string name="account_prompt">Choose a account</string>
     <string-array name="accounts_arrays">
-        <item>Saving Account</item>
         <item>Checking Account</item>
+        <item>Saving Account</item>
     </string-array>
 </resources>

@@ -13,7 +13,7 @@
         android:layout_width="85dp"
         android:layout_height="35dp"
         android:layout_marginLeft="32dp"
-        android:text="Balance"
+        android:text="Balance:"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,8 +34,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="76dp"
-        android:layout_height="34dp"
+        android:layout_width="176dp"
+        android:layout_height="36dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
@@ -48,13 +48,14 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="298dp"
+        android:layout_width="300dp"
         android:layout_height="311dp"
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:text="Balance History"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
