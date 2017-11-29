@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 //Read File Imports
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,83 +46,7 @@ public class CBActivity extends AppCompatActivity {
 
         }
     }
-
-    //Read Files
-    private String readFileString(String fileName) {
-        Context context = this;
-        AssetManager am = context.getAssets();
-        try {
-            InputStream is = am.open(fileName);
-            String  response = convertStreamToString(is);
-            return response;
-        }catch (IOException e) {
-            System.out.println("cant find the file");
-        }
-        return null;
-    }
-    //Convert stream to String
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                if(line.contains("money"))
-                {
-
-                }
-                else {
-                    sb.append(line).append('\n');
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-    //Read Files
-    private ArrayList readFileArrayList(String fileName) {
-        Context context = this;
-        AssetManager am = context.getAssets();
-        try {
-            InputStream is = am.open(fileName);
-            ArrayList list = new ArrayList();
-            list = convertStreamToArrayList(is);
-            return list;
-        }catch (IOException e) {
-            System.out.println("cant find the file");
-        }
-        return null;
-    }
-    //Convert stream to ArrayList
-    private ArrayList convertStreamToArrayList(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        ArrayList list = new ArrayList();
-        String line = null;
-
-        try {
-            while ((line = reader.readLine()) != null) {
-                list.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return list;
-    }
-
+    //==================================================================================================
     //Navigation Bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -145,23 +70,56 @@ public class CBActivity extends AppCompatActivity {
             return false;
         }
     };
+    //==============================================================================================
+    // Read File Return String
+    private String readFromFile(Context context,String fileName) {
 
+        String ret = "";
+
+        try {
+            InputStream inputStream = context.openFileInput(fileName);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+        return ret;
+    }
+
+    //==============================================================================================
     private void typesOfAccount(String accountType){
         //Read Tranctions History
-        String input = readFileString(accountType);
+        String input = readFromFile(this,accountType);
         Context context = this;
-        TextView txtView = (TextView) ((Activity)context).findViewById(R.id.textView2);
-        txtView.setText(input);
-        //Read Amount
-        ArrayList list = readFileArrayList(accountType);
-        String splitS[];
+        String splitSl [] = input.split(";");
         String money;
-        money = list.get(0).toString();
-        splitS = money.split("=");
-        money = splitS[1];
-        Context context2 = this;
-        TextView viewAmount = (TextView) ((Activity)context2).findViewById(R.id.textView);
+        money = splitSl[0];
+        money = money.replace("money=","");
+        TextView viewAmount = (TextView) ((Activity)context).findViewById(R.id.textView);
         viewAmount.setText(money);
+
+        StringBuilder sb = new StringBuilder();
+        for(int i =1; i < splitSl.length; i++)
+        {
+            sb.append(splitSl[i]).append('\n');
+        }
+        TextView txtView = (TextView) ((Activity)context).findViewById(R.id.textView2);
+        txtView.setText(sb.toString());
     }
 
     @Override

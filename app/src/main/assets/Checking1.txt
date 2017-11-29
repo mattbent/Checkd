@@ -1,9 +1,9 @@
-money=$123.45
-Transaction History:
-10/9 SHEETZ Greenville NC $-6.50
-10/8 WM SUPERCENTER Greenville NC $-4.28
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+money=$455.45;Transaction History:;
+10/9 SHEETZ Greenville NC $-6.50;
+10/8 WM SUPERCENTER Greenville NC $-4.28;
+10/7 ABC Greenville NC $-20.54;
+10/6 ABC Greenville NC $-99.99;
+10/5 MCDonald Greenville NC $13.68;
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

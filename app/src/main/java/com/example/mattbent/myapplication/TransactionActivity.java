@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 //Read File Imports
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,82 +47,6 @@ public class TransactionActivity extends AppCompatActivity {
         }
     }
 
-    //Read Files
-    private String readFileString(String fileName) {
-        Context context = this;
-        AssetManager am = context.getAssets();
-        try {
-            InputStream is = am.open(fileName);
-            String  response = convertStreamToString(is);
-            return response;
-        }catch (IOException e) {
-            System.out.println("cant find the file");
-        }
-        return null;
-    }
-    //Convert stream to String
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                if(line.contains("money"))
-                {
-
-                }
-                else {
-                    sb.append(line).append('\n');
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-    //Read Files
-    private ArrayList readFileArrayList(String fileName) {
-        Context context = this;
-        AssetManager am = context.getAssets();
-        try {
-            InputStream is = am.open(fileName);
-            ArrayList list = new ArrayList();
-            list = convertStreamToArrayList(is);
-            return list;
-        }catch (IOException e) {
-            System.out.println("cant find the file");
-        }
-        return null;
-    }
-    //Convert stream to ArrayList
-    private ArrayList convertStreamToArrayList(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        ArrayList list = new ArrayList();
-        String line = null;
-
-        try {
-            while ((line = reader.readLine()) != null) {
-                list.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return list;
-    }
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -145,24 +70,41 @@ public class TransactionActivity extends AppCompatActivity {
             return false;
         }
     };
+    //==============================================================================================
+    // Read File Return String
+    private String readFromFile(Context context,String fileName) {
 
+        String ret = "";
 
-    private double typesOfAccount(String accountType){
-        //Read Amount
-        ArrayList list = readFileArrayList(accountType);
-        String splitS[];
-        String money;
-        money = list.get(0).toString();
-        splitS = money.split("=");
-        money = splitS[1];
-        money=money.replace("$","");
-        double moneyNum = Double.parseDouble(money);
-        return moneyNum;
-    }
-// Write the file
-    private void writeToFile(String data, Context context) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+            InputStream inputStream = context.openFileInput(fileName);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+        return ret;
+    }
+
+    //write file
+    private void writeToFile(String data,Context context,String fileName) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
@@ -170,53 +112,121 @@ public class TransactionActivity extends AppCompatActivity {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
+    //==============================================================================================
+    private float typesOfAccount(String accountType){
+        //Read Tranctions History
+        String input = readFromFile(this,accountType);
+        Context context = this;
+        String splitSl [] = input.split(";");
+        String money;
+        money = splitSl[0];
+        money = money.replace("money=$","");
+        float moneyDou = Float.parseFloat(money);
+        return moneyDou;
+    }
+    //==============================================================================================
+    private void trans()
+    {
+        float savingAccountMon = typesOfAccount("Saving1.txt");
+        float checkingAccountMon = typesOfAccount("Checking1.txt");
+        //get the spinner name for both spinners
+        Spinner fromSpinner=(Spinner) findViewById(R.id.transaction_spinnerFrom);
+        String fromText = fromSpinner.getSelectedItem().toString();
+        Spinner toSpinner=(Spinner) findViewById(R.id.transaction_spinnerTo);
+        String toText = toSpinner.getSelectedItem().toString();
+        //get amount user put in
+        EditText amount = findViewById(R.id.editAmount);
+        String amountS = amount.getText().toString();
+        float amountMon = Float.parseFloat(amountS);
+        TextView textbox = (TextView) ((Activity)this).findViewById(R.id.txtMessage);
+
+        if(fromText.equals("Checking Account")&&toText.equals("Saving Account"))
+        {
+            checkingAccountMon = checkingAccountMon - amountMon;
+            if(checkingAccountMon > 0) {
+                savingAccountMon = savingAccountMon + amountMon;
+                String savingAccountString = readFromFile(this, "Saving1.txt");
+                String splitSaving[] = savingAccountString.split(";");
+                String savingAccountS = Float.toString(savingAccountMon);
+                splitSaving[0] = "money=$" + savingAccountS + ";";
+                StringBuilder sbSaving = new StringBuilder();
+                for (int i = 0; i < splitSaving.length; i++) {
+                    sbSaving.append(splitSaving[i] + ";").append('\n');
+                }
+                writeToFile(sbSaving.toString(), this, "Saving1.txt");
+
+                //checkingAccountMon = checkingAccountMon - amountMon;
+                String checkingAccountString = readFromFile(this, "Checking1.txt");
+                String splitChecking[] = checkingAccountString.split(";");
+                String checkingAccountS = Float.toString(checkingAccountMon);
+                splitChecking[0] = "money=$" + checkingAccountS + ";";
+                StringBuilder sbChecking = new StringBuilder();
+                for (int i = 0; i < splitChecking.length; i++) {
+                    sbChecking.append(splitChecking[i] + ";").append('\n');
+                }
+                writeToFile(sbChecking.toString(), this, "Checking1.txt");
+                textbox.setText("Money has been Transfor Successfully");
+            }
+            else
+            {
+                textbox.setText("Can not transfer money, not enough money in the Checking Account");
+            }
+        }
+        else if(fromText.equals("Saving Account")&&toText.equals("Checking Account"))
+        {
+
+            savingAccountMon = savingAccountMon - amountMon;
+            if(savingAccountMon > 0) {
+                String savingAccountString = readFromFile(this, "Saving1.txt");
+                String splitSaving[] = savingAccountString.split(";");
+                String savingAccountS = Float.toString(savingAccountMon);
+                splitSaving[0] = "money=$" + savingAccountS + ";";
+                StringBuilder sbSaving = new StringBuilder();
+                for (int i = 0; i < splitSaving.length; i++) {
+                    sbSaving.append(splitSaving[i] + ";").append('\n');
+                }
+                writeToFile(sbSaving.toString(), this, "Saving1.txt");
+
+                checkingAccountMon = checkingAccountMon + amountMon;
+                String checkingAccountString = readFromFile(this, "Checking1.txt");
+                String splitChecking[] = checkingAccountString.split(";");
+                String checkingAccountS = Float.toString(checkingAccountMon);
+                splitChecking[0] = "money=$" + checkingAccountS + ";";
+                StringBuilder sbChecking = new StringBuilder();
+                for (int i = 0; i < splitChecking.length; i++) {
+                    sbChecking.append(splitChecking[i] + ";").append('\n');
+                }
+                writeToFile(sbChecking.toString(), this, "Checking1.txt");
+                textbox.setText("Money has been Transfor Successfully");
+            }
+            else
+            {
+                textbox.setText("Can not transfer money, not enough money in the Saving Account");
+            }
+        }
+        else
+        {
+            textbox.setText("Can not Transfer money in the same account");
+        }
+    }
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
 
-
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.getMenu().getItem(1).setChecked(true);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        writeToFile("Hello World",this);
 
         Button btn = (Button) findViewById(R.id.btm_comfirm);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double savingAccountMon = typesOfAccount("Saving1.txt");
-                double checkingAccountMon = typesOfAccount("Checking1.txt");
-
-                Spinner fromSpinner=(Spinner) findViewById(R.id.transaction_spinnerFrom);
-                String fromText = fromSpinner.getSelectedItem().toString();
-                Spinner toSpinner=(Spinner) findViewById(R.id.transaction_spinnerTo);
-                String toText = toSpinner.getSelectedItem().toString();
-
-                EditText amount = findViewById(R.id.editAmount);
-                String amountS = amount.getText().toString();
-                double amountMon = Double.parseDouble(amountS);
-
-
-                if(fromText.equals("Checking Account")&&toText.equals("Saving Account"))
-                {
-                    savingAccountMon = savingAccountMon + amountMon;
-                    checkingAccountMon = checkingAccountMon - amountMon;
-                    ArrayList savingAccountList = readFileArrayList("Saving1.txt");
-                    savingAccountList.set(0,"$"+savingAccountMon);
-                    ArrayList checkingAccountList = readFileArrayList("Checking1.txt");
-                    savingAccountList.set(0,"$"+checkingAccountMon);
-                }
-                else if(fromText.equals("Saving Account")&&toText.equals("Checking Account"))
-                {
-                    savingAccountMon = savingAccountMon - amountMon;
-                    checkingAccountMon = checkingAccountMon + amountMon;
-                }
-
-
+                trans();
             }
         });
     }

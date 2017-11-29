@@ -87,11 +87,12 @@
         app:layout_constraintTop_toBottomOf="@+id/transaction_spinnerTo" />
 
     <TextView
-        android:id="@+id/textMessage"
+        android:id="@+id/txtMessage"
         android:layout_width="287dp"
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="92dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editAmount" />
 
