@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -194,6 +195,9 @@ public class CBActivity extends AppCompatActivity {
             }
 
         });
+        Context context = this;
+        TextView txtView = (TextView) ((Activity)context).findViewById(R.id.textView2);
+        txtView.setMovementMethod(new ScrollingMovementMethod());
     }
 
 }

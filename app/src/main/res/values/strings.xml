@@ -5,7 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="email_input">Email</string>
     <string name="password_input">Password</string>
-    <string name="account_prompt">Choose a account</string>
+    <string name="account_prompt">Choose an account</string>
     <string-array name="accounts_arrays">
         <item>Checking Account</item>
         <item>Saving Account</item>
