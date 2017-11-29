@@ -1,0 +1,2 @@
+account=adimin123@gmail.com
+passowrd=12345
