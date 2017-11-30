@@ -43,7 +43,8 @@ public class TransactionActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else if(choice.equals("c")){
-
+            Intent intent = new Intent(this, DepositActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -165,7 +166,7 @@ public class TransactionActivity extends AppCompatActivity {
                     sbChecking.append(splitChecking[i] + ";").append('\n');
                 }
                 writeToFile(sbChecking.toString(), this, "Checking1.txt");
-                textbox.setText("Money has been Transfor Successfully");
+                textbox.setText("Money has been transferred successfully");
             }
             else
             {

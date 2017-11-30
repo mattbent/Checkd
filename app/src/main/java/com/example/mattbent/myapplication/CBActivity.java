@@ -43,7 +43,8 @@ public class CBActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else if(choice.equals("c")){
-
+            Intent intent = new Intent(this, DepositActivity.class);
+            startActivity(intent);
         }
     }
     //==================================================================================================
