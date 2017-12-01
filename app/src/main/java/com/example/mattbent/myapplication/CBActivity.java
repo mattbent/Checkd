@@ -113,13 +113,13 @@ public class CBActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(id == 0)
                 {
-                    //Saving Account
-                    displayTransInfo(user.getSavings(),checkingTrans);
+                    //Checking Account
+                    displayTransInfo(user.getChecking(),savingTrans);
                 }
                 else if(id == 1)
                 {
-                    //Checking Account
-                    displayTransInfo(user.getChecking(),savingTrans);
+                    //Saving Account
+                    displayTransInfo(user.getSavings(),checkingTrans);
                 }
             }
             @Override
