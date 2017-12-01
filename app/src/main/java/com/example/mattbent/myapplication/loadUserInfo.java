@@ -53,4 +53,28 @@ public class loadUserInfo {
         return outputNum;
     }
 
+    public String getSavingTrans(Context context)
+    {
+        String input = loadInfo.readFromFile(context,"Saving1.txt");
+        String splitS[] =input.split(";");
+        StringBuilder sb = new StringBuilder();
+        for(int i =1; i < splitS.length; i++)
+        {
+            sb.append(splitS[i]).append('\n');
+        }
+        return sb.toString();
+    }
+
+    public String getCheckingTrans(Context context)
+    {
+        String input = loadInfo.readFromFile(context,"Checking1.txt");
+        String splitS[] =input.split(";");
+        StringBuilder sb = new StringBuilder();
+        for(int i =1; i < splitS.length; i++)
+        {
+            sb.append(splitS[i]).append('\n');
+        }
+        return sb.toString();
+    }
+
 }

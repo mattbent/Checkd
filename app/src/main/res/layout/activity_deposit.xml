@@ -24,12 +24,12 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="Deposit To"
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerAccount"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerAccount"
         android:layout_width="218dp"
         android:layout_height="26dp"
         android:layout_marginEnd="8dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -101,12 +101,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imagebtm_front"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="136dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
@@ -120,23 +121,34 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/imagebtm_back"
         android:layout_width="wrap_content"
         android:layout_height="39dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="184dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btm_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="152dp"
         android:text="Continue"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/bottonMes"
+        android:layout_width="328dp"
+        android:layout_height="97dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="36dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btm_continue" />
 
 </android.support.constraint.ConstraintLayout>

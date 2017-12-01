@@ -1,14 +1,14 @@
-money=$987.32;
+money=987.32;
 Transaction History:;
 10/9 SHEETZ Greenville NC $-6.50;
 10/8 WM SUPERCENTER Greenville NC $-4.28;
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+10/8 Bad Daddy's Burgers Greenville NC $-25.34;
+10/7 Food Lion Greenville NC $-120.22;
+10/7 Cashpoints WITHDRAWAL Greenville NC $-40.00;
+10/6 Olive Garden Greenville NC $-19.37;
+10/6 Taco Bell Greenville NC $-5.89;
+10/5 Shell Greenville NC $-30.65;
+10/4 Harris Teeter Greenville NC $-20.25;
+10/3 McDonald's Greenville NC $-5.22;
+10/1 Buffalo Wild Wings Greenville NC $-15.77;
+9/27 Burger King Greenville NC $-3.12;

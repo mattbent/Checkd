@@ -26,12 +26,18 @@ import android.content.res.AssetManager;
 import android.content.Context;
 
 //Other Imports
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class CBActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    fileHandle loadInfo = new fileHandle();
+    loadUserInfo load = new loadUserInfo();     //helper class that can load all the data that program need
+    Context context = this;                     //represent context in current activity
 
+    //==================================================================================================
     //Activity Changing
     public void changeActivity(String choice) {
         if(choice.equals("a")) {
@@ -47,7 +53,6 @@ public class CBActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-    //==================================================================================================
     //Navigation Bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -72,55 +77,16 @@ public class CBActivity extends AppCompatActivity {
         }
     };
     //==============================================================================================
-    // Read File Return String
-    private String readFromFile(Context context,String fileName) {
+    //displayTransInfo: display entire page of information
+    private void displayTransInfo(double money,String trans){
 
-        String ret = "";
-
-        try {
-            InputStream inputStream = context.openFileInput(fileName);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
-        return ret;
-    }
-
-    //==============================================================================================
-    private void typesOfAccount(String accountType){
-        //Read Tranctions History
-        String input = readFromFile(this,accountType);
-        Context context = this;
-        String splitSl [] = input.split(";");
-        String money;
-        money = splitSl[0];
-        money = money.replace("money=","");
+        String moneyFin = "$"+Double.toString(money);
         TextView viewAmount = (TextView) ((Activity)context).findViewById(R.id.textView);
-        viewAmount.setText(money);
+        viewAmount.setText(moneyFin);
 
-        StringBuilder sb = new StringBuilder();
-        for(int i =1; i < splitSl.length; i++)
-        {
-            sb.append(splitSl[i]).append('\n');
-        }
+
         TextView txtView = (TextView) ((Activity)context).findViewById(R.id.textView2);
-        txtView.setText(sb.toString());
+        txtView.setText(trans);
     }
 
     @Override
@@ -132,6 +98,14 @@ public class CBActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        final Account user = new Account(load.getAccount(context),load.getPassword(context),load.getFingerprint(context)
+                ,load.getSaving(context),load.getChecking(context));
+        final String checkingTrans = load.getCheckingTrans(context);
+        final String savingTrans = load.getSavingTrans(context);
+        TextView txtUsername = (TextView)findViewById(R.id.txt_username);
+        String userN = "Hello, "+user.getUsername();
+        txtUsername.setText(userN);
+
         //Spinner
         Spinner mySpinner=(Spinner) findViewById(R.id.account_spinner);
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -140,12 +114,12 @@ public class CBActivity extends AppCompatActivity {
                 if(id == 0)
                 {
                     //Saving Account
-                    typesOfAccount("Checking1.txt");
+                    displayTransInfo(user.getSavings(),checkingTrans);
                 }
                 else if(id == 1)
                 {
                     //Checking Account
-                    typesOfAccount("Saving1.txt");
+                    displayTransInfo(user.getChecking(),savingTrans);
                 }
             }
             @Override
@@ -154,7 +128,6 @@ public class CBActivity extends AppCompatActivity {
             }
 
         });
-        Context context = this;
         TextView txtView = (TextView) ((Activity)context).findViewById(R.id.textView2);
         txtView.setMovementMethod(new ScrollingMovementMethod());
     }

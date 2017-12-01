@@ -1,2 +1,3 @@
-account=adimin123@gmail.com
-passowrd=12345
+account=adimin123@gmail.com;
+passowrd=12345;
+fingerprint=987654321;

@@ -1,16 +1,17 @@
-money=$455.45;Transaction History:;
+money=455.45;
+Transaction History:;
 10/9 SHEETZ Greenville NC $-6.50;
 10/8 WM SUPERCENTER Greenville NC $-4.28;
 10/7 ABC Greenville NC $-20.54;
 10/6 ABC Greenville NC $-99.99;
-10/5 MCDonald Greenville NC $13.68;
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+10/5 McDonald's Greenville NC $-13.68;
+10/3 Rite Aid Greenville NC $-5.32;
+10/2 Walgreens Greenville NC $-10.15;
+10/2 Cook Out Greenville NC $-6.45;
+10/2 Bojangles Greenville NC $-10.32;
+10/1 Food Lion Greenville NC $-75.34;
+9/29 Olive Garden Greenville NC $-25.84;
+9/28 Bath & Body Works Greenville NC $-8.72;
+9/28 GameStop Greenville NC $-61.23;
+9/27 Applebee's Greenville NC $-10.22;
+9/25 Adam & Eve Greenville NC $-78.65;
